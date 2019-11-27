@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoriaRequest;
+use App\Http\Resources\Categoria as AppCategoria;
 use App\Models\Categoria;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
 {
-	public function __construct()
+    public function __construct()
     {
         $this->middleware('auth');
         $this->middleware('permission:categoria-list');
@@ -34,12 +36,20 @@ public function index()
     }
 
 
-     public function create()
+
+    public function index()
+    {
+        $categorias = AppCategoria::collection(Categoria::all());
+        return view('categoria.index', compact('categorias'));
+    }
+
+   
+    public function create()
     {
         $categorias = Categoria::select('id', 'nombre')->get();
         return view('categoria.create', compact('categorias'));
     }
- public function store(Request $request)
+    public function store(CategoriaRequest $request)
     {
         if ($request->nombre) {
 
@@ -53,7 +63,6 @@ public function index()
             $categoria = Categoria::find($request->categoria_id);
         }
 
-         $servicio = new Servicio;
 
         $servicio->nombre = $request->nombre_servicio;
         $servicio->precio = $request->precio;
@@ -64,17 +73,15 @@ public function index()
         return redirect()->route('categoria.index')->with('success', 'CATEGORIA REGISTRADO CON EXITO!');
     }
 
-
     public function edit($id)
     {
-        $categoria = Categoria::find($id);
+        $categoria = new AppCategoria(Categoria::find($id));
         return view('categoria.edit', compact('categoria'));
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoriaRequest $request, $id)
     {
-
-    	$categoria = Categoria::find($id);
+        $categoria = Categoria::find($id);
         $categoria->nombre =  $request->nombre;
         $categoria->descripcion = $request->descripcion;
 
@@ -93,7 +100,6 @@ public function index()
             $servicio->precio = $precios[$i];
             $servicio->descripcion = $descripciones[$i];
 
-             $servicio->update();
         }
 
         return redirect()->route('categoria.index')->with('success', 'CATEGORIA ACTUALIZADO CON EXITO!');

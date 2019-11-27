@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
+=======
+use App\Http\Requests\EmpleadoOrdenRequest;
+use App\Http\Resources\EmpleadoOrden as AppEmpleadoOrden;
+>>>>>>> origin/saenz
 use App\Models\ClienteServicio;
 use App\Models\Empleado;
 use App\Models\EmpleadoOrden;
@@ -23,6 +28,7 @@ class EmpleadoOrdenController extends Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $empleadoordenes = EmpleadoOrden::with('orden', 'empleado')->get();
         return view('detalle_orden.index', compact('empleadoordenes'));
     }
@@ -37,6 +43,13 @@ class EmpleadoOrdenController extends Controller
         }
     }
 
+=======
+        $empleadoordenes = AppEmpleadoOrden::collection(EmpleadoOrden::all());
+        return view('detalle_orden.index', compact('empleadoordenes'));
+    }
+
+    
+>>>>>>> origin/saenz
     public function create()
     {
         $empleados = Empleado::select('id', 'nombres')->get();
@@ -47,7 +60,11 @@ class EmpleadoOrdenController extends Controller
         return view('detalle_orden.create', compact('empleados', 'ordenes', 'servicios', 'especiales'));
     }
 
+<<<<<<< HEAD
     public function store(Request $request)
+=======
+    public function store(EmpleadoOrdenRequest $request)
+>>>>>>> origin/saenz
     {
 
         $resultado = $request->id_servicio;
@@ -73,7 +90,12 @@ class EmpleadoOrdenController extends Controller
 
     public function edit($id)
     {
+<<<<<<< HEAD
         $empleadoorden = EmpleadoOrden::find($id);
+=======
+        $empleadoorden = new AppEmpleadoOrden(EmpleadoOrden::find($id));
+        
+>>>>>>> origin/saenz
         $empleados = Empleado::select('id', 'nombres')->get();
         $ordenes = Orden::select('id', 'nombre')->get();
         
@@ -81,7 +103,11 @@ class EmpleadoOrdenController extends Controller
         return view('detalle_orden.edit', compact('empleadoorden', 'empleados', 'ordenes'));
     }
 
+<<<<<<< HEAD
     public function update(Request $request, $id)
+=======
+    public function update(EmpleadoOrdenRequest $request, $id)
+>>>>>>> origin/saenz
     {
         $detalle = EmpleadoOrden::find($id);
 

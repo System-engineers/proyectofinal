@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+<<<<<<< HEAD
+=======
+use App\Http\Requests\ClienteRequest;
+use App\Http\Resources\Cliente as AppCliente;
+>>>>>>> origin/saenz
 use App\Models\Cliente;
 use App\Models\Servicio;
 use Illuminate\Http\Request;
@@ -20,6 +25,7 @@ class ClienteController extends Controller
 
     public function index()
     {
+<<<<<<< HEAD
         $clientes = Cliente::has('servicios')->with('servicios')->get();
         return view('cliente.index', compact('clientes'));
     }
@@ -34,6 +40,13 @@ class ClienteController extends Controller
         }
     }
 
+=======
+        $clientes = AppCliente::collection(Cliente::has('servicios')->get());
+        return view('cliente.index', compact('clientes'));
+    }
+
+    
+>>>>>>> origin/saenz
     public function create()
     {
         $clientes = Cliente::select('id', 'nombres')->get();
@@ -42,7 +55,11 @@ class ClienteController extends Controller
         return view('cliente.create', compact('clientes', 'servicios'));
     }
 
+<<<<<<< HEAD
     public function store(Request $request)
+=======
+    public function store(ClienteRequest $request)
+>>>>>>> origin/saenz
     {
 
         $cliente =  Cliente::find($request->cliente_id);
@@ -68,12 +85,20 @@ class ClienteController extends Controller
     public function edit($id)
     {
         $servicios = Servicio::select('id', 'nombre', 'precio')->get();
+<<<<<<< HEAD
         $cliente = Cliente::find($id);
+=======
+        $cliente = new AppCliente(Cliente::find($id));
+>>>>>>> origin/saenz
 
         return view('cliente.edit', compact('cliente', 'servicios'));
     }
 
+<<<<<<< HEAD
     public function update(Request $request, $id)
+=======
+    public function update(ClienteRequest $request, $id)
+>>>>>>> origin/saenz
     {
         $cliente =  Cliente::find($id);
 
