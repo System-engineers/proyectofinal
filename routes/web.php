@@ -12,5 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('categoria', 'CategoriaController');
+Route::resource('cliente', 'ClienteController');
+Route::resource('empleado', 'EmpleadoController');
+Route::resource('orden', 'OrdenController');
+Route::resource('empleadoorden', 'EmpleadoOrdenController');
+Route::resource('users', 'UserController');
+Route::resource('roles', 'RoleController');
